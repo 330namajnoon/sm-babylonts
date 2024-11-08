@@ -1,4 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
+import AppScene from "./AppScene";
+import Script from "./Script";
 
 class Entity {
   private _id: string;
@@ -7,6 +9,8 @@ class Entity {
   private _particleSystems: BABYLON.IParticleSystem[];
   private _skeletons: BABYLON.Skeleton[];
   private _animationGroups: BABYLON.AnimationGroup[];
+  private _scripts: Script<any>[] = [];
+  private _appScene: AppScene;
 
   constructor(
     id: string,
@@ -14,7 +18,8 @@ class Entity {
     meshes: BABYLON.AbstractMesh[],
     particleSystems: BABYLON.IParticleSystem[],
     skeletons: BABYLON.Skeleton[],
-    animationGroups: BABYLON.AnimationGroup[]
+    animationGroups: BABYLON.AnimationGroup[],
+    appScene: AppScene
   ) {
     this._id = id;
     this._name = name;
@@ -22,6 +27,7 @@ class Entity {
     this._particleSystems = particleSystems;
     this._skeletons = skeletons;
     this._animationGroups = animationGroups;
+    this._appScene = appScene;
   }
 
   public getId(): string {
@@ -50,7 +56,21 @@ class Entity {
 
   public rotate(axis: BABYLON.Vector3, angle: number, space: number): void {
     this._meshes.forEach((mesh) => {
-      mesh.rotate(axis, Math.PI / 180 * angle, space);
+      mesh.rotate(axis, (Math.PI / 180) * angle, space);
+    });
+  }
+
+  public addScript(
+    Script: new (appScene: AppScene, entity: any) => Script<any>
+  ): void {
+    const script = new Script(this._appScene, this);
+    script?.initial?.();
+    this._scripts.push(script);
+  }
+
+  public updateScripts(): void {
+    this._scripts.forEach((script) => {
+      script?.update?.();
     });
   }
 }

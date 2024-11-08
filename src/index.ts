@@ -1,6 +1,5 @@
-import { AppScene } from "./modules";
 
-export { AppScene };
+export { AppScene, Entity, Script } from "./modules";
 
 // const createScene = async (canvas: HTMLCanvasElement) => {
 //     const ngine = new BABYLON.Engine(canvas, true);
