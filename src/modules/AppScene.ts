@@ -60,6 +60,7 @@ class AppScene {
                 this._externalEntities.push(entity);
                 resolve(entity);
             }, null, (scene, message, exception) => {
+                console.error(message, scene);
                 reject(exception);
             });
         });
