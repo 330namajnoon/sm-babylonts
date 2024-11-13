@@ -40,7 +40,6 @@ class AppScene {
         this._scene = new BABYLON.Scene(this._engine);
         this._camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 7, new BABYLON.Vector3(0, 0, 0), this._scene);
         this._camera.attachControl(canvas, true);
-        this._scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
         this._internalEntities.push({ id: "0", name: "camera", entity: this._camera });
         this._engine.runRenderLoop(() => {
             this._externalEntities.forEach(entity => {

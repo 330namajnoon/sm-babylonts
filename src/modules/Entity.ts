@@ -60,11 +60,21 @@ class Entity {
     });
   }
 
-  public addScript(
-    Script: new (appScene: AppScene, entity: any) => Script<any>
-  ): void {
+  public scale(axis: BABYLON.Vector3): void {
+    this._meshes.forEach((mesh) => {
+      mesh.scaling = axis;
+    });
+  }
+
+  public setPosition(position: BABYLON.Vector3): void {
+    this._meshes.forEach((mesh) => {
+      mesh.position = position;
+    });
+  }
+
+  public addScript(Script: new (appScene: AppScene, entity: any, ...rest: any[]) => any, ...rest: any[]): void {
     const script = new Script(this._appScene, this);
-    script?.initial?.();
+    script?.initial?.(...rest);
     this._scripts.push(script);
   }
 
