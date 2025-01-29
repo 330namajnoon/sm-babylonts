@@ -68,7 +68,7 @@ class Entity {
 
   public setPosition(position: BABYLON.Vector3): void {
     this._meshes.forEach((mesh) => {
-      mesh.position = position;
+      mesh.setAbsolutePosition(position);
     });
   }
 

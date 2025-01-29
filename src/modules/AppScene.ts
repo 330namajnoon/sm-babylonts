@@ -9,7 +9,7 @@ class AppScene {
     private _engine!: BABYLON.Engine;
     private _scene!: BABYLON.Scene;
     private _canvas!: HTMLCanvasElement;
-    private _camera!: BABYLON.ArcRotateCamera;
+    private _camera!: BABYLON.DeviceOrientationCamera;
     private _externalEntities: Entity[] = [];
     private _internalEntities: InternalEntity<any>[] = [];
     private _scripts: Script<InternalEntity<any> | Entity>[] = [];
@@ -26,7 +26,7 @@ class AppScene {
         return this._canvas;
     }
 
-    public getCamera(): BABYLON.ArcRotateCamera {
+    public getCamera(): BABYLON.DeviceOrientationCamera {
         return this._camera;
     }
 
@@ -38,7 +38,7 @@ class AppScene {
         this._canvas = canvas;
         this._engine = new BABYLON.Engine(canvas, true);
         this._scene = new BABYLON.Scene(this._engine);
-        this._camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 7, new BABYLON.Vector3(0, 0, 0), this._scene);
+        this._camera = new BABYLON.DeviceOrientationCamera("camera", new BABYLON.Vector3(0, 0, 0), this._scene);
         this._camera.attachControl(canvas, true);
         this._internalEntities.push({ id: "0", name: "camera", entity: this._camera });
         this._engine.runRenderLoop(() => {
